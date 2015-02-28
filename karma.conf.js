@@ -1,0 +1,18 @@
+module.exports = function (config) {
+  config.set({
+    autoWatch: false,
+    browsers: ['PhantomJS'],
+    client: {
+      captureConsole: true
+    },
+    frameworks: ['jasmine'],
+    files: [
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'format-as-currency.js',
+      'test/format-as-currency.js'
+    ],
+    logLevel: config.LOG_INFO,
+    singleRun: true
+  })
+}

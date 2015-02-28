@@ -1,0 +1,44 @@
+{
+  "name": "format-as-currency",
+  "version": "1.0.0",
+  "description": "Angular directive to format an input as a currency as the user types",
+  "main": "format-as-currency.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcherny/format-as-currency.git"
+  },
+  "keywords": [
+    "angular",
+    "currency",
+    "dollar",
+    "euro",
+    "input",
+    "text",
+    "autocomplete",
+    "typeahead",
+    "format",
+    "automatic",
+    "auto",
+    "nice",
+    "pretty"
+  ],
+  "author": "Boris Cherny <boris@performancejs.com> (http://performancejs.com/)",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/bcherny/format-as-currency/issues"
+  },
+  "homepage": "https://github.com/bcherny/format-as-currency",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "jasmine-core": "^2.2.0",
+    "karma": "^0.12.31",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4"
+  }
+}
