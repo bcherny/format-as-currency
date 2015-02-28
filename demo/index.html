@@ -11,21 +11,48 @@
 
   <style>
 
-    * { border: 0; margin: 0; padding: 0 }
+    * { border: 0; margin: 0; outline: 0; padding: 0 }
+
+    body,
+    input {
+      font: 100 18px/24px Helvetica, Arial, sans-serif;
+    }
 
     input {
       border: 1px solid #eee;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 20px;
+    }
+
+    .ng-invalid.ng-touched {
+      border-color: red;
+    }
+
+    label {
       display: block;
-      font: 100 18px/24px Helvetica, Arial, sans-serif;
       height: 18px;
       margin: auto;
-      padding: 20px;
       position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         top: 0;
+      text-align: right;
       width: 400px;
+    }
+
+    #view {
+      transform: translateY(-40px);
+    }
+
+    #model {
+      transform: translateY(40px);
+    }
+
+    #model,
+    #model input {
+      color: #999;
     }
 
   </style>
@@ -33,12 +60,28 @@
 </head>
 <body>
 
-  <input
-    format-as-currency
-    ng-model="value"
-    placeholder="Type a number..."
-    type="text"
-  >
+  <label id="view">
+
+    Type a number:
+
+    <input
+      format-as-currency
+      ng-model="value"
+      type="text"
+    >
+
+  </label>
+  <label id="model">
+
+    Model value:
+
+    <input
+      ng-model="value"
+      type="text"
+    >
+
+  </label>
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
   <script src="../format-as-currency.js"></script>

@@ -4,7 +4,7 @@ angular
 
   // (haystack: String, needles: Array<String>) => Number
   // eg. ('foo', 'o') => 2
-  this.occurences = function (haystack, needles) {
+  this.occurrences = function (haystack, needles) {
 
     if (!angular.isString(haystack)) {
       throw new TypeError ('formatAsCurrencyUtilities#occurences expects its 1st argument to be a String, but was given ' + haystack)
@@ -14,12 +14,25 @@ angular
       throw new TypeError ('formatAsCurrencyUtilities#occurences expects its 2nd argument to be an Array, but was given ' + needles)
     }
 
+    needles.forEach(function (needle, n) {
+      if (!angular.isString(needle)) {
+        throw new TypeError ('formatAsCurrencyUtilities#occurences expects needles to be Strings, but needle #' + n + ' is ' + needle)
+      }
+    })
+
     return needles
+
+      // get counts
       .map(function (needle) {
+        _needle = needle
+          .replace(/\[/g, '\\[')
+          .replace(/\]/g, '\\]')
         return (
-          haystack.match(new RegExp('\\' + needle, 'g')) || []
+          haystack.match(new RegExp('[' + _needle + ']', 'g')) || []
         ).length
       })
+
+      // sum counts
       .reduce(function (prev, cur) {
         return prev + cur
       })
@@ -54,7 +67,9 @@ angular
 
       ngModel.$parsers.push(function (value) {
 
-        var number = util.toFloat(value)
+        var number = util
+          .toFloat(value)
+          .toFixed(2)
 
         if (ngModel.$validators.currency(number)) {
 
@@ -64,7 +79,7 @@ angular
           // did we add a comma or currency symbol?
           var specialCharactersCountChange = [value, formatted]
             .map(function (string) {
-              return util.occurences(string, specialCharacters)
+              return util.occurrences(string, specialCharacters)
             })
             .reduce(function (prev, cur) {
               return cur - prev

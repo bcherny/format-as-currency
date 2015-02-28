@@ -1,7 +1,7 @@
 module.exports = function (config) {
   config.set({
     autoWatch: false,
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
     client: {
       captureConsole: true
     },
