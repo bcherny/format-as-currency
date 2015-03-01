@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp test",
-    "pretest": "npm install"
+    "pretest": "./node_modules/.bin/bower install && npm install"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/bcherny/format-as-currency",
   "devDependencies": {
+    "bower": "^1.3.12",
     "gulp": "^3.8.11",
     "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
