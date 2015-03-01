@@ -13,6 +13,16 @@ module.exports = function (config) {
       'test/format-as-currency.js'
     ],
     logLevel: config.LOG_INFO,
-    singleRun: true
+    singleRun: true,
+
+    // coverage
+    coverageReporter: {
+      type : 'lcov',
+      dir : 'coverage/',
+    },
+    preprocessors: {
+      'format-as-currency.js': ['coverage']
+    },
+    reporters: ['progress', 'coverage']
   })
 }

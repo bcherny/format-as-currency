@@ -1,7 +1,16 @@
 var gulp = require('gulp')
 var karma = require('karma').server
+var coveralls = require('gulp-coveralls')
 
-gulp.task('test', function (done) {
+gulp.task('coveralls', ['unit'], function () {
+
+  gulp
+    .src('coverage/**/lcov.info')
+    .pipe(coveralls())
+
+})
+
+gulp.task('unit', function (done) {
 
   karma.start({
     configFile: __dirname + '/karma.conf.js'
@@ -22,3 +31,5 @@ gulp.task('tdd', function (done) {
   })
 
 })
+
+gulp.task('test', ['coveralls'])
