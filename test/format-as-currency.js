@@ -22,6 +22,10 @@ describe ('format-as-currency', function () {
 
   describe ('formatAsCurrency', function () {
 
+    it ('should fail', function () {
+      expect(true).toBe(false)
+    })
+
     it ('should format model values as currencies', function () {
 
       [

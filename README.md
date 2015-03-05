@@ -1,6 +1,6 @@
 # format-as-currency
 
-[![Build Status][build]](https://travis-ci.org/bcherny/format-as-currency) [![Coverage Status][coverage]](https://coveralls.io/r/bcherny/format-as-currency) ![][bower] [![npm]](https://www.npmjs.com/package/format-as-currency) [![cc0]](http://creativecommons.org/about/cc0)
+[![Build Status][build]](https://circleci.com/gh/bcherny/format-as-currency) [![Coverage Status][coverage]](https://coveralls.io/r/bcherny/format-as-currency) ![][bower] [![npm]](https://www.npmjs.com/package/format-as-currency) [![cc0]](http://creativecommons.org/about/cc0)
 
 [build]: https://img.shields.io/circleci/project/bcherny/format-as-currency.svg?branch=master&style=flat-square
 [coverage]: http://img.shields.io/coveralls/bcherny/format-as-currency.svg?branch=master&style=flat-square
