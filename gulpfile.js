@@ -2,7 +2,7 @@ var gulp = require('gulp')
 var karma = require('karma').server
 var coveralls = require('gulp-coveralls')
 
-gulp.task('coveralls', ['unit'], function () {
+gulp.task('coveralls', function () {
 
   gulp
     .src('coverage/**/lcov.info')
@@ -31,5 +31,3 @@ gulp.task('tdd', function (done) {
   })
 
 })
-
-gulp.task('test', ['coveralls'])
