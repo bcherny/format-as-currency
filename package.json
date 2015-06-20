@@ -1,6 +1,6 @@
 {
   "name": "format-as-currency",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Angular directive to format an input as a currency as the user types",
   "main": "format-as-currency.js",
   "directories": {

@@ -14,8 +14,12 @@ gulp.task('unit', function (done) {
 
   karma.start({
     configFile: __dirname + '/karma.conf.js'
-  }, function() {
-    done()
+  }, function (exitCode) {
+    if (exitCode == 0) {
+      done()
+    } else {
+      process.exit(exitCode)
+    }
   })
 
 })
