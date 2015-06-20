@@ -52,8 +52,7 @@ angular
 })
 .directive('formatAsCurrency', function ($filter, $locale, formatAsCurrencyUtilities) {
 
-  const CURRENCY_SYMBOL = $locale.NUMBER_FORMATS.CURRENCY_SYM
-
+  var CURRENCY_SYMBOL = $locale.NUMBER_FORMATS.CURRENCY_SYM
   var util = formatAsCurrencyUtilities
 
   return {

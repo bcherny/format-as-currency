@@ -13,6 +13,9 @@ describe ('format-as-currency', function () {
       scope = $rootScope.$new(true)
       scope.value = null
       element = angular.element('<input type="text" ng-model="value" format-as-currency>')
+      angular
+        .element(document.body)
+        .append(element)
 
       $compile(element)(scope)
 
@@ -21,10 +24,6 @@ describe ('format-as-currency', function () {
   })
 
   describe ('formatAsCurrency', function () {
-
-    it ('should fail', function () {
-      expect(true).toBe(false)
-    })
 
     it ('should format model values as currencies', function () {
 
