@@ -50,7 +50,7 @@ angular
   }
 
 })
-.directive('formatAsCurrency', function ($filter, $locale, formatAsCurrencyUtilities) {
+.directive('formatAsCurrency', ['$filter', '$locale', 'formatAsCurrencyUtilities', function ($filter, $locale, formatAsCurrencyUtilities) {
 
   var CURRENCY_SYMBOL = $locale.NUMBER_FORMATS.CURRENCY_SYM
   var util = formatAsCurrencyUtilities
@@ -113,4 +113,4 @@ angular
     }
   }
 
-})
+}])
