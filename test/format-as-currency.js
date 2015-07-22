@@ -126,6 +126,25 @@ describe ('format-as-currency', function () {
 
     })
 
+    it ('should ignore special characters', function() {
+      [
+        ['$0.00', '0.00'],
+        ['$abcdWXYZ123,456', '123456.00'],
+        ['!@#$%^&*()_+$123,456', '123456.00'],
+        ['={}[]\\/><:;$123,456.00', '123456.00']
+      ]
+      .forEach(function (testCase) {
+
+        element
+          .val(testCase[0])
+          .triggerHandler('change')
+
+        expect(scope.value)
+          .toBe(testCase[1])
+
+      })
+    })
+
   })
 
   describe ('formatAsCurrencyUtilities', function () {

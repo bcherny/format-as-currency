@@ -65,7 +65,9 @@ angular
       })
 
       ngModel.$parsers.push(function (value) {
-
+        // ignore non-numeric characters
+        value = value.replace(/[a-zA-Z!\?>:;\|<@#%\^&\*\)\(\+\/\\={}\[\]_]/g, '')
+        
         var number = util
           .toFloat(value)
           .toFixed(2)
