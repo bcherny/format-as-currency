@@ -16,7 +16,7 @@ describe ('format-as-currency', function () {
       angular
         .element(document.body)
         .append(element)
-
+      
       $compile(element)(scope)
 
     })
@@ -144,7 +144,42 @@ describe ('format-as-currency', function () {
 
       })
     })
+    
+    describe('when configured to suppress the currency symbol', function() {
+    
+      var elementWithSuppressedSymbol, suppressedSymbolScope
+    
+      beforeEach(function() {
 
+        inject(function ($compile, $rootScope) {
+    
+          suppressedSymbolScope = $rootScope.$new(true)
+          suppressedSymbolScope.value = null
+            
+          elementWithSuppressedSymbol = angular.element('<input type="text" ng-model="value" format-as-currency suppress-currency-symbol="true">')
+          angular
+            .element(document.body)
+            .append(elementWithSuppressedSymbol)
+          
+          $compile(elementWithSuppressedSymbol)(suppressedSymbolScope)
+    
+        })
+        
+      })
+    
+      it ('should suppress the currency symbol', function() {
+  
+        suppressedSymbolScope.$apply(function() {
+          suppressedSymbolScope.value = 123
+        })
+        
+        expect(elementWithSuppressedSymbol.val())
+          .toBe('123.00')
+  
+      })
+    
+    })
+    
   })
 
   describe ('formatAsCurrencyUtilities', function () {
