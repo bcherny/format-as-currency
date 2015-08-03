@@ -58,10 +58,15 @@ angular
   return {
     require: 'ngModel',
     restrict: 'A',
+    scope: {
+      suppressCurrencySymbol: '@'
+    },
     link: function (scope, element, _, ngModel) {
 
+      var suppressCurrencySymbol = scope.suppressCurrencySymbol == 'true' ? true : false
+
       ngModel.$formatters.push(function (value) {
-        return $filter('currency')(value)
+        return $filter('currency')(value, suppressCurrencySymbol ? '' : undefined)
       })
 
       ngModel.$parsers.push(function (value) {
@@ -74,8 +79,11 @@ angular
 
         if (ngModel.$validators.currency(number)) {
 
-          var formatted = $filter('currency')(number)
-          var specialCharacters = [',', CURRENCY_SYMBOL]
+          var formatted = $filter('currency')(number, suppressCurrencySymbol ? '' : undefined)
+          var specialCharacters = [',']
+          if (!suppressCurrencySymbol) {
+            specialCharacters.push(CURRENCY_SYMBOL)
+          }
 
           // did we add a comma or currency symbol?
           var specialCharactersCountChange = [value, formatted]
