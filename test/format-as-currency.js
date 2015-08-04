@@ -211,7 +211,7 @@ describe ('format-as-currency', function () {
 
     describe ('#toFloat', function () {
 
-      it ('should throw a TypeError when its 1nd argument is not a String', function () {
+      it ('should throw a TypeError when its 1st argument is not a String', function () {
 
         [42, [], {}, function(){}].forEach(function (first) {
 
@@ -243,6 +243,62 @@ describe ('format-as-currency', function () {
           expect(util.toFloat(testCase[0]))
             .toEqual(testCase[1])
 
+        })
+
+      })
+
+    })
+
+    describe ('#uniq', function () {
+
+      it ('should return uniques', function () {
+
+        [
+          [[], []],
+          [[1,2,3], [1,2,3]],
+          [[1,2,3,3,1], [1,2,3]]
+        ]
+        .forEach(function (test) {
+          expect(util.uniq(test[0])).toEqual(test[1])
+        })
+
+      })
+
+    })
+
+    describe ('#uniqueChars', function () {
+
+      it ('should throw a TypeError when its 1st or 2nd argument is not a String', function () {
+
+        [42, [], {}, function(){}].forEach(function (first) {
+
+          expect(function(){
+            util.uniqueChars(first, 'foo')
+          }).toThrowError(TypeError)
+
+        });
+
+        [42, [], {}, function(){}].forEach(function (second) {
+
+          expect(function(){
+            util.uniqueChars('foo', second)
+          }).toThrowError(TypeError)
+
+        })
+
+      })
+
+      it ('should return unique characters', function () {
+
+        [
+          ['abc', 'abc', []],
+          ['abc', 'abcd', ['d']],
+          ['abcd', 'abc', []],
+          ['123456.78', '$123,456.78', ['$', ',']],
+          ['abcd', 'eee', ['e']]
+        ]
+        .forEach(function (test) {
+          expect(util.uniqueChars(test[0], test[1])).toEqual(test[2])
         })
 
       })

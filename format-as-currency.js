@@ -49,10 +49,38 @@ angular
     return parseFloat(currencyString.replace(/(\$|\,)+/g, ''), 10)
   }
 
+  // (array: Array) => Array
+  // eg. [1,2,2] => [1,2]
+  this.uniq = function (array) {
+    return array.reduce(function (prev, cur) {
+      return prev.indexOf(cur) > -1 ? prev : prev.concat(cur)
+    }, [])
+  }
+
+  // (a: String, b: String) => Array<String>
+  // eg. 123.00, "$123.00" => ["$", ","]
+  this.uniqueChars = function (a, b) {
+
+    if (!angular.isString(a)) {
+      throw new TypeError ('formatAsCurrencyUtilities#uniqueChars expects its 1st argument to be a String, but was given ' + a)
+    }
+
+    if (!angular.isString(b)) {
+      throw new TypeError ('formatAsCurrencyUtilities#uniqueChars expects its 2nd argument to be a String, but was given ' + b)
+    }
+
+    var chars = a.split('')
+    return this.uniq(
+      b.split('').sort().reduce(function (prev, cur) {
+        return chars.indexOf(cur) < 0 ? prev.concat(cur) : prev
+      }, [])
+    )
+
+  }
+
 })
 .directive('formatAsCurrency', ['$filter', '$locale', 'formatAsCurrencyUtilities', function ($filter, $locale, formatAsCurrencyUtilities) {
 
-  var CURRENCY_SYMBOL = $locale.NUMBER_FORMATS.CURRENCY_SYM
   var util = formatAsCurrencyUtilities
 
   return {
@@ -75,7 +103,7 @@ angular
         if (ngModel.$validators.currency(number)) {
 
           var formatted = $filter('currency')(number)
-          var specialCharacters = [',', CURRENCY_SYMBOL]
+          var specialCharacters = util.uniqueChars(number, formatted)
 
           // did we add a comma or currency symbol?
           var specialCharactersCountChange = [value, formatted]
