@@ -7,16 +7,16 @@ angular
   this.occurrences = function (haystack, needles) {
 
     if (!angular.isString(haystack)) {
-      throw new TypeError ('formatAsCurrencyUtilities#occurences expects its 1st argument to be a String, but was given ' + haystack)
+      throw new TypeError ('formatAsCurrencyUtilities#occurrences expects its 1st argument to be a String, but was given ' + haystack)
     }
 
     if (!angular.isArray(needles)) {
-      throw new TypeError ('formatAsCurrencyUtilities#occurences expects its 2nd argument to be an Array, but was given ' + needles)
+      throw new TypeError ('formatAsCurrencyUtilities#occurrences expects its 2nd argument to be an Array, but was given ' + needles)
     }
 
     needles.forEach(function (needle, n) {
       if (!angular.isString(needle)) {
-        throw new TypeError ('formatAsCurrencyUtilities#occurences expects needles to be Strings, but needle #' + n + ' is ' + needle)
+        throw new TypeError ('formatAsCurrencyUtilities#occurrences expects needles to be Strings, but needle #' + n + ' is ' + needle)
       }
     })
 
@@ -35,7 +35,7 @@ angular
       // sum counts
       .reduce(function (prev, cur) {
         return prev + cur
-      })
+      }, 0)
   }
 
   // (currencyString: String) => Number
@@ -86,10 +86,18 @@ angular
   return {
     require: 'ngModel',
     restrict: 'A',
-    link: function (scope, element, _, ngModel) {
+    link: function (scope, element, attrs, ngModel) {
+
+      var filter = $filter('currency')
+
+      scope.$watch(function(){
+        return scope.$eval(attrs.currencyFilter)
+      }, function (f) {
+        filter = f ? $filter(f) : $filter('currency')
+      })
 
       ngModel.$formatters.push(function (value) {
-        return $filter('currency')(value)
+        return filter(value)
       })
 
       ngModel.$parsers.push(function (value) {
@@ -102,7 +110,7 @@ angular
 
         if (ngModel.$validators.currency(number)) {
 
-          var formatted = $filter('currency')(number)
+          var formatted = filter(number)
           var specialCharacters = util.uniqueChars(number, formatted)
 
           // did we add a comma or currency symbol?

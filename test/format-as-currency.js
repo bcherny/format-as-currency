@@ -1,23 +1,43 @@
+angular
+  .module('test', [])
+  .filter('foo', function () {
+    return function (value) {
+      return '*' + value + '*'
+    }
+  })
+
 describe ('format-as-currency', function () {
 
-  var element, scope, util
+  var element, scope, element2, scope2, util
 
   beforeEach(function() {
 
+    module('test')
     module('bcherny/formatAsCurrency')
 
     inject(function ($compile, $rootScope, formatAsCurrencyUtilities) {
 
       util = formatAsCurrencyUtilities
 
+      // vanilla
       scope = $rootScope.$new(true)
       scope.value = null
       element = angular.element('<input type="text" ng-model="value" format-as-currency>')
       angular
         .element(document.body)
         .append(element)
-
       $compile(element)(scope)
+      scope.$digest()
+
+      // custom filter
+      scope2 = $rootScope.$new(true)
+      scope2.value = null
+      element2 = angular.element('<input type="text" ng-model="value" format-as-currency currency-filter="\'foo\'">')
+      angular
+        .element(document.body)
+        .append(element2)
+      $compile(element2)(scope2)
+      scope2.$digest()
 
     })
 
@@ -40,6 +60,27 @@ describe ('format-as-currency', function () {
         })
 
         expect(element.val())
+          .toBe(testCase[1])
+
+      })
+
+    })
+
+    it ('should accept custom currency formatters', function(){
+
+      [
+        [0, '*0*'],
+        [123, '*123*'],
+        [123456, '*123456*'],
+        ['foo', '*foo*']
+      ]
+      .forEach(function (testCase) {
+
+        scope2.$apply(function(){
+          scope2.value = testCase[0]
+        })
+
+        expect(element2.val())
           .toBe(testCase[1])
 
       })
@@ -190,6 +231,7 @@ describe ('format-as-currency', function () {
       it ('should return the number of occurrences of the given substrings in the haystack', function () {
 
         [
+          ['foo', [], 0],
           ['foo', ['b'], 0],
           ['foo', ['o'], 2],
           ['123,456,789,012', [','], 3],
@@ -251,7 +293,7 @@ describe ('format-as-currency', function () {
 
     describe ('#uniq', function () {
 
-      it ('should return uniques', function () {
+      it ('should return the given array without duplicates', function () {
 
         [
           [[], []],
