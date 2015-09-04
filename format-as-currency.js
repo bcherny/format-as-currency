@@ -65,6 +65,11 @@ angular
           // set the cursor back to its expected position
           // (since $render resets the cursor the the end)
           element[0].setSelectionRange(selectonRange[0], selectonRange[1])
+        } else {
+          ngModel.$setViewValue('')
+          ngModel.$render()
+
+          return void 0
         }
 
         return number
