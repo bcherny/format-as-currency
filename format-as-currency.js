@@ -1,42 +1,6 @@
 angular
 .module('bcherny/formatAsCurrency', [])
-.service('formatAsCurrencyUtilities', function () {
-
-  // (haystack: String, needles: Array<String>) => Number
-  // eg. ('foo', 'o') => 2
-  this.occurrences = function (haystack, needles) {
-
-    if (!angular.isString(haystack)) {
-      throw new TypeError ('formatAsCurrencyUtilities#occurrences expects its 1st argument to be a String, but was given ' + haystack)
-    }
-
-    if (!angular.isArray(needles)) {
-      throw new TypeError ('formatAsCurrencyUtilities#occurrences expects its 2nd argument to be an Array, but was given ' + needles)
-    }
-
-    needles.forEach(function (needle, n) {
-      if (!angular.isString(needle)) {
-        throw new TypeError ('formatAsCurrencyUtilities#occurrences expects needles to be Strings, but needle #' + n + ' is ' + needle)
-      }
-    })
-
-    return needles
-
-      // get counts
-      .map(function (needle) {
-        _needle = needle
-          .replace(/\[/g, '\\[')
-          .replace(/\]/g, '\\]')
-        return (
-          haystack.match(new RegExp('[' + _needle + ']', 'g')) || []
-        ).length
-      })
-
-      // sum counts
-      .reduce(function (prev, cur) {
-        return prev + cur
-      }, 0)
-  }
+.service('formatAsCurrencyUtilities', ['$locale', function ($locale) {
 
   // (currencyString: String) => Number
   // eg. "$123.00" => 123.00
@@ -46,39 +10,11 @@ angular
       throw new TypeError ('formatAsCurrencyUtilities#toFloat expects its 1st argument to be a String, but was given ' + currencyString)
     }
 
-    return parseFloat(currencyString.replace(/(\$|\,)+/g, ''), 10)
+    var specialCharFinder = new RegExp('((' + $locale.NUMBER_FORMATS.CURRENCY_SYM.replace(/(.)/g, '\\$1') + ')|\\' + $locale.NUMBER_FORMATS.GROUP_SEP + ')+', 'g')
+    return parseFloat(currencyString.replace(specialCharFinder, '').replace($locale.NUMBER_FORMATS.DECIMAL_SEP, '.'), 10)
   }
 
-  // (array: Array) => Array
-  // eg. [1,2,2] => [1,2]
-  this.uniq = function (array) {
-    return array.reduce(function (prev, cur) {
-      return prev.indexOf(cur) > -1 ? prev : prev.concat(cur)
-    }, [])
-  }
-
-  // (a: String, b: String) => Array<String>
-  // eg. 123.00, "$123.00" => ["$", ","]
-  this.uniqueChars = function (a, b) {
-
-    if (!angular.isString(a)) {
-      throw new TypeError ('formatAsCurrencyUtilities#uniqueChars expects its 1st argument to be a String, but was given ' + a)
-    }
-
-    if (!angular.isString(b)) {
-      throw new TypeError ('formatAsCurrencyUtilities#uniqueChars expects its 2nd argument to be a String, but was given ' + b)
-    }
-
-    var chars = a.split('')
-    return this.uniq(
-      b.split('').sort().reduce(function (prev, cur) {
-        return chars.indexOf(cur) < 0 ? prev.concat(cur) : prev
-      }, [])
-    )
-
-  }
-
-})
+}])
 .directive('formatAsCurrency', ['$filter', '$locale', 'formatAsCurrencyUtilities', function ($filter, $locale, formatAsCurrencyUtilities) {
 
   var util = formatAsCurrencyUtilities
@@ -101,9 +37,6 @@ angular
       })
 
       ngModel.$parsers.push(function (value) {
-        // ignore non-numeric characters
-        value = value.replace(/[a-zA-Z!\?>:;\|<@#%\^&\*\)\(\+\/\\={}\[\]_]/g, '')
-        
         var number = util
           .toFloat(value)
           .toFixed(2)
@@ -111,16 +44,10 @@ angular
         if (ngModel.$validators.currency(number)) {
 
           var formatted = filter(number)
-          var specialCharacters = util.uniqueChars(number, formatted)
+          var dotIndex = value.indexOf($locale.NUMBER_FORMATS.DECIMAL_SEP)
 
-          // did we add a comma or currency symbol?
-          var specialCharactersCountChange = [value, formatted]
-            .map(function (string) {
-              return util.occurrences(string, specialCharacters)
-            })
-            .reduce(function (prev, cur) {
-              return cur - prev
-            })
+          // gets the difference in the position of the decimal separator betwen the formatted number and the one on the input
+          var charDifference = formatted.indexOf($locale.NUMBER_FORMATS.DECIMAL_SEP) - (dotIndex === -1 ? value.length : dotIndex)
 
           // compute the new selection range, correcting for
           // formatting introduced by the currency $filter
@@ -128,7 +55,7 @@ angular
             element[0].selectionStart,
             element[0].selectionEnd
           ].map(function (position) {
-            return position + specialCharactersCountChange
+            return position + charDifference
           })
 
           // set the formatted value in the view
