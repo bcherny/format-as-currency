@@ -65,8 +65,17 @@ Install via bower or NPM:
 </script>
 ```
 
-# Running the tests
+## Running the tests
 
 ```sh
 npm test
 ```
+
+## Contributing
+
+Contributions are welcome! Please be sure to:
+
+- File an issue for the problem that your PR addresses
+- Test your fix thoroughly
+- Follow the existing code style
+- Add unit tests to cover your feature, or to prevent future regressions
