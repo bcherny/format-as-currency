@@ -92,6 +92,7 @@ describe ('format-as-currency', function () {
       [
         ['0', (0).toFixed(2)],
         ['$0.00', (0).toFixed(2)],
+        ['$0.999', (0.99).toFixed(2)],
         ['$123.00', (123).toFixed(2)],
         ['$123,456.78', '123456.78'],
         ['foo', void 0]
