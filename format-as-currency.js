@@ -24,7 +24,7 @@ angular
 
       // get counts
       .map(function (needle) {
-        _needle = needle
+        var _needle = needle
           .replace(/\[/g, '\\[')
           .replace(/\]/g, '\\]')
         return (
