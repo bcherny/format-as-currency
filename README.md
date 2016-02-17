@@ -23,6 +23,22 @@ Install via bower or NPM:
 
 ## Usage
 
+#### ES2015
+```js
+import angular from 'angular';
+import formatAsCurrency from 'format-as-currency';
+angular.module('myapp', [formatAsCurrency]);
+```
+
+#### CommonJS
+```js
+var angular = require('angular');
+var formatAsCurrency = require('format-as-currency');
+angular.module('myapp', [formatAsCurrency]);
+```
+
+#### Bower
+
 ```html
 <div ng-controller="myController">
   <input
