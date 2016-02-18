@@ -2,13 +2,15 @@
   "name": "format-as-currency",
   "version": "2.0.3",
   "description": "Angular directive to format an input as a currency as the user types",
-  "main": "format-as-currency.js",
+  "main": "dist/format-as-currency.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "karma start; karma run; ./node_modules/.bin/gulp coveralls",
-    "pretest": "./node_modules/.bin/bower install && npm install"
+    "test": "karma start; karma run; gulp coveralls",
+    "pretest": "bower install && npm install",
+    "prepublish": "npm run build-browserify",
+    "build-browserify": "browserify -s formatAsCurrency -u angular -t browserify-shim ./src/format-as-currency.js > ./dist/format-as-currency.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,7 @@
   "homepage": "https://github.com/bcherny/format-as-currency",
   "devDependencies": {
     "bower": "^1.5.3",
+    "browserify-shim": "^3.8.12",
     "gulp": "^3.9.0",
     "gulp-coveralls": "^0.1.4",
     "jasmine-core": "^2.3.4",
@@ -44,5 +47,8 @@
     "karma-chrome-launcher": "^0.2.1",
     "karma-coverage": "^0.5.2",
     "karma-jasmine": "^0.3.6"
+  },
+  "browserify-shim": {
+    "angular": "global:angular"
   }
 }

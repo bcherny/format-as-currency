@@ -9,7 +9,7 @@ module.exports = function (config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'format-as-currency.js',
+      'dist/format-as-currency.js',
       'test/format-as-currency.js'
     ],
     logLevel: config.LOG_INFO,
@@ -21,7 +21,7 @@ module.exports = function (config) {
       dir : 'coverage/',
     },
     preprocessors: {
-      'format-as-currency.js': ['coverage']
+      'dist/format-as-currency.js': ['coverage']
     },
     reporters: ['progress', 'coverage']
   })

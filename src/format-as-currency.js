@@ -1,3 +1,6 @@
+// for usage via require()
+module.exports = 'bcherny/formatAsCurrency'
+
 angular
 .module('bcherny/formatAsCurrency', [])
 .service('formatAsCurrencyUtilities', function () {
