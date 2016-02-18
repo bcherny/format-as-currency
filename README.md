@@ -65,6 +65,29 @@ Install via bower or NPM:
 </script>
 ```
 
+### With a module loader
+
+#### Browserify
+
+```js
+var formatAsCurrency = require('format-as-currency')
+angular.module('myModule', [formatAsCurrency])
+```
+
+#### Rollup
+
+```js
+import * as formatAsCurrency from 'format-as-currency'
+angular.module('myModule', [formatAsCurrency])
+```
+
+#### Webpack
+
+```js
+var formatAsCurrency = require('format-as-currency/src/format-as-currency')
+angular.module('myModule', [formatAsCurrency])
+```
+
 ## Running the tests
 
 ```sh

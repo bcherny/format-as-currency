@@ -1,14 +1,12 @@
 {
   "name": "format-as-currency",
   "main": "format-as-currency.js",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "authors": [
     "Boris Cherny <boris@performancejs.com>"
   ],
   "description": "Angular directive to format an input as a currency as the user types",
-  "moduleType": [
-    "globals"
-  ],
+  "moduleType": ["amd", "es6", "globals", "node"],
   "keywords": [
     "angular",
     "currency",
