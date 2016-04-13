@@ -1,6 +1,6 @@
 {
   "name": "format-as-currency",
-  "main": "format-as-currency.js",
+  "main": "dist/format-as-currency.js",
   "version": "3.0.0",
   "authors": [
     "Boris Cherny <boris@performancejs.com>"
