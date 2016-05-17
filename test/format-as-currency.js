@@ -31,7 +31,7 @@ describe ('format-as-currency', function () {
 
       // custom filter
       scope2 = $rootScope.$new(true)
-      scope2.value = null
+      scope2.value = 123
       element2 = angular.element('<input type="text" ng-model="value" format-as-currency currency-filter="\'foo\'">')
       angular
         .element(document.body)
@@ -63,6 +63,13 @@ describe ('format-as-currency', function () {
           .toBe(testCase[1])
 
       })
+
+    })
+
+    it ('should initialize with a custom currency format', function(){
+
+        expect(element2.val())
+          .toBe('*123*')
 
     })
 
