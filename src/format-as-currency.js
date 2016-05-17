@@ -91,7 +91,7 @@ angular
     restrict: 'A',
     link: function (scope, element, attrs, ngModel) {
 
-      var filter = $filter('currency')
+      var filter = (attrs && attrs.currencyFilter) ? $filter(scope.$eval(attrs.currencyFilter)) : $filter('currency')
 
       scope.$watch(function(){
         return scope.$eval(attrs.currencyFilter)
