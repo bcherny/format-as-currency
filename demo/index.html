@@ -66,6 +66,8 @@
 
     <input
       format-as-currency
+      currency-filter="'foo'"
+      ng-init="demo.value = 42"
       ng-model="demo.value"
       type="text"
     >
@@ -91,6 +93,11 @@
   .module('demo', [
     'bcherny/formatAsCurrency'
   ])
+  .filter('foo', function () {
+    return function (value) {
+      return '*' + value + '*'
+    }
+  })
   .controller('demo', function () {
 
     this.value = null

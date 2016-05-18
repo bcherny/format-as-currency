@@ -97,6 +97,7 @@ angular
         return scope.$eval(attrs.currencyFilter)
       }, function (f) {
         filter = f ? $filter(f) : $filter('currency')
+        triggerRender()
       })
 
       ngModel.$formatters.push(function (value) {
@@ -106,7 +107,7 @@ angular
       ngModel.$parsers.push(function (value) {
         // ignore non-numeric characters
         value = value.replace(/[a-zA-Z!\?>:;\|<@#%\^&\*\)\(\+\/\\={}\[\]_]/g, '')
-        
+
         var number = (Math.floor(util.toFloat(value) * 100) / 100).toFixed(2)
 
         if (ngModel.$validators.currency(number)) {
@@ -147,6 +148,13 @@ angular
 
       ngModel.$validators.currency = function (modelValue) {
         return !isNaN(modelValue)
+      }
+
+      // manually trigger the $formatters pipeline
+      function triggerRender() {
+        ngModel.$setViewValue(ngModel.$formatters.reduce(function (value, fn) {
+          return fn(value)
+        }, ngModel.$modelValue))
       }
 
     }
