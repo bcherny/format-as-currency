@@ -45,7 +45,27 @@ Install via bower or NPM:
 </script>
 ```
 
-### With a custom curency formatter
+### With a custom currency symbol
+
+```html
+<input
+  format-as-currency
+  currency-filter="'yuan'"
+  ng-model="value"
+  type="text"
+>
+<script>
+  angular
+  ...
+  .filter('yuan', function ($filter) {
+    return function (value) {
+      return $filter('currency')(value, '¥')
+    }
+  })
+</script>
+```
+
+### With a custom currency formatter
 
 ```html
 <input
