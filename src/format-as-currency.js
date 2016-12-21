@@ -89,10 +89,12 @@ angular
   return {
     require: 'ngModel',
     restrict: 'A',
+    scope: {
+      currencySymbol: "@",
+      fractionSize: "@"
+    },
     link: function (scope, element, attrs, ngModel) {
-
       var filter = $filter('currency')
-
       scope.$watch(function(){
         return scope.$eval(attrs.currencyFilter)
       }, function (f) {
@@ -101,7 +103,7 @@ angular
       })
 
       ngModel.$formatters.push(function (value) {
-        return filter(value)
+        return filter(value, scope.currencySymbol, scope.fractionSize)
       })
 
       ngModel.$parsers.push(function (value) {
@@ -112,7 +114,7 @@ angular
 
         if (ngModel.$validators.currency(number)) {
 
-          var formatted = filter(number)
+          var formatted = filter(number, scope.currencySymbol, scope.fractionSize)
           var specialCharacters = util.uniqueChars(number, formatted)
 
           // did we add a comma or currency symbol?

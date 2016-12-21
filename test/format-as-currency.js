@@ -8,7 +8,7 @@ angular
 
 describe ('format-as-currency', function () {
 
-  var element, scope, element2, scope2, util
+  var element, scope, element2, scope2, element3, scope3, util;
 
   beforeEach(function() {
 
@@ -38,6 +38,15 @@ describe ('format-as-currency', function () {
         .append(element2)
       $compile(element2)(scope2)
       scope2.$digest()
+
+      // currency filter arguments
+      scope3 = $rootScope.$new(true)
+      element3 = angular.element('<input type="text" ng-model="value" format-as-currency currency-symbol="@" fraction-size="1">')
+      angular
+        .element(document.body)
+        .append(element3)
+      $compile(element3)(scope3)
+      scope3.$digest()
 
     })
 
@@ -91,6 +100,26 @@ describe ('format-as-currency', function () {
 
       expect(element2.val())
         .toBe('*123.45*')
+
+    })
+
+    it ('should accept currency filter arguments', function(){
+
+      [
+        [0, '@0.0'],
+        [123, '@123.0'],
+        [123456, '@123,456.0'],
+        ['foo', '']
+      ]
+      .forEach(function (testCase) {
+        scope3.$apply(function(){
+          scope3.value = testCase[0]
+        })
+
+        expect(element3.val())
+          .toBe(testCase[1])
+
+      })
 
     })
 
